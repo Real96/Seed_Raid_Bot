@@ -9,7 +9,7 @@
 #r.Ability == '1'/'2'/'H'
 #r.Nature == 'NATURE'
 #r.ShinyType = 'None'/'Star'/'Square'
-#r.IVs == spread_name
+#r.IVs == spread_name (spread_name = [x,x,x,x,x,x])
 
 from G8RNG import XOROSHIRO,Raid
 import socket
@@ -63,7 +63,7 @@ while True:
     time.sleep(1)
     sendCommand(s, "click HOME") #Home
     print("HOME clicked")
-    time.sleep(2)
+    time.sleep(1.5)
 
     sendCommand(s, "peek 0x4298FB82 1") #rare beam byte
     time.sleep(0.5)
@@ -127,7 +127,7 @@ while True:
             if c == 'y':
                 time.sleep(0.5)
                 sendCommand(s, "click X")
-                time.sleep(2)
+                time.sleep(0.5)
                 sendCommand(s, "click A")
                 time.sleep(3.5)
             break
@@ -137,7 +137,7 @@ while True:
 
     time.sleep(0.5)
     sendCommand(s, "click X")
-    time.sleep(2)
+    time.sleep(0.5)
     sendCommand(s, "click A")
     time.sleep(3.5)
     print()

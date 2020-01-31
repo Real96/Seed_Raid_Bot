@@ -1,6 +1,6 @@
 #Start the bot with closed game and selection square over it
-#Den Seed address: "peek 0xaddress 8" (address = 0x4298FAA0 + (0xden_id - 1) * 0x18))
-#Event flag byte address = "peek 0xaddress 8" (address = (0x4298FAAB + (den_id - 1) * 0x18)) + 0xB)
+#Den Seed address: "peek 0xaddress 8" (address = 0x4298FA70 + (0xden_id) * 0x18)) Example: 0x4298fb78 Den 11
+#Event flag byte address = "peek 0xaddress 1" (address = (0x4298FABB + (0xden_id) * 0x18)) + 0xB) Example: 0x4298fb83 Den 11
 #isEvent == 0/1 (search event raid seeds only)
 #r.Ability == '1'/'2'/'H'
 #r.Nature == 'NATURE'
@@ -21,7 +21,7 @@ s.connect(("192.168.1.7", 6000))
 
 reset = 0
 ivfilter = 1 #set 0 to disable filter
-Maxresults = 5000
+Maxresults = 100000
 isEvent = 0
 #add the spreads you need
 V6 = [31,31,31,31,31,31]
@@ -56,7 +56,7 @@ while True:
     print("A in den")
     time.sleep(1)
     sendCommand(s, "click A")
-    time.sleep(2.5)
+    time.sleep(2)
     sendCommand(s, "click A") #A to throw piece
     print("throw piece in den")
     time.sleep(1.8)
@@ -67,7 +67,7 @@ while True:
     print("HOME clicked")
     time.sleep(2)
     
-    sendCommand(s, "peek 0x4298fb9B 1") #event byte
+    sendCommand(s, "peek 0x4298fb83 1") #event byte
     time.sleep(0.5)
     eventbyte = s.recv(3)
     #print(binascii.unhexlify(eventbyte[0:-1]))
@@ -77,18 +77,19 @@ while True:
 
     if flag:
         isEvent = 1
-        print("Event")
+        print("Event raid")
     else:
         isEvent = 0
-        print("No event")
+        print("No event raid")
     
-    sendCommand(s, "peek 0x4298fb90 8") #get reversed seed from ram
+    sendCommand(s, "peek 0x4298fb78 8") #get reversed seed from ram
     time.sleep(0.5)
     re_seed = s.recv(17)
     re_seed = (binascii.unhexlify(re_seed[0:-1])).hex()
     #print(re_seed)
     seed = int.from_bytes(binascii.unhexlify(re_seed), "little") #reverse the seed
-    print("Seed", hex(seed))
+    print("Seed:", hex(seed))
+    print("Searching...")
 
     #spread searh
     j = 0
@@ -97,7 +98,7 @@ while True:
         r = Raid(seed, flawlessiv = 5, HA = 1, RandomGender = 1)
         seed = XOROSHIRO(seed).next()
         if ivfilter:
-            if r.ShinyType != 'None' and r.Ability == 1 and r.Nature == 'RELAXED': #and (r.IVs == S0 or r.IVs == S1 or r.IVs == S2
+            if r.ShinyType != 'None' and r.Nature == 'RELAXED' and r.Ability == 'H': #and (r.IVs == S0 or r.IVs == S1 or r.IVs == S2
                                                                                          #or r.IVs == S3 or r.IVs == S4 or r.IVs == S5):
                 print(j)
                 r.print()
@@ -107,14 +108,20 @@ while True:
         j += 1
 
     if found:
-        break
+        print("Found after", reset, "resets")
+        a = input('Continue? (y/n): ')
+        if a != "y":
+            c = input('Close the game? (y/n): ')
+            if c == 'y':
+                time.sleep(0.5)
+                sendCommand(s, "click X")
+                time.sleep(2)
+                sendCommand(s, "click A")
+                time.sleep(3.5)
+            break
     else:
         reset = reset + 1
         print("Nothing found - resets:", reset)
-        
-    a = input('Continue? (y/n): ')
-    if a != "y":
-        break
 
     time.sleep(0.5)
     sendCommand(s, "click X")

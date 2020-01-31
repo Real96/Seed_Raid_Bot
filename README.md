@@ -3,6 +3,11 @@
  
 # Requirements
 * sys-botbase(https://github.com/olliz0r/sys-botbase)
+
+# Features
+* Sofreset a den for good Den Seed
+* Softreset for event
+* Softrest for rare beam(soon)
  
 # Credits:
 * olliz0r for his amazing sys-module

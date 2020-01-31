@@ -112,9 +112,9 @@ while True:
         reset = reset + 1
         print("Nothing found - resets:", reset)
         
-    '''a = input('Continue? ')
+    a = input('Continue? (y/n): ')
     if a != "y":
-        break'''
+        break
 
     time.sleep(0.5)
     sendCommand(s, "click X")

@@ -54,7 +54,7 @@ while True:
     time.sleep(8)
     sendCommand(s, "click A") #A in den
     print("A in den")
-    time.sleep(1)
+    time.sleep(0.5)
     sendCommand(s, "click A")
     time.sleep(2)
     sendCommand(s, "click A") #A to throw piece

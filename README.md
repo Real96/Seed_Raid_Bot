@@ -6,8 +6,8 @@
 
 # Features
 * Sofreset a den for good Den Seed
-* Softreset for event
-* Softreset for rare beam(soon)
+* Softreset for event raid
+* Softreset for rare beam raid(soon)
  
 # Credits:
 * olliz0r for his amazing sys-module

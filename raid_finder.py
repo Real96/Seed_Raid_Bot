@@ -1,6 +1,10 @@
-#Start the bot with closed game and selection square over it
-#Den Seed address: "peek 0xaddress 8" (address = 0x4298FA70 + (0xden_id) * 0x18)) Example: 0x4298fb78 Den 11
-#Event flag byte address = "peek 0xaddress 1" (address = (0x4298FABB + (0xden_id) * 0x18)) + 0xB) Example: 0x4298fb83 Den 11
+#Set game text speed to slow
+#Save in front of a Den. You must have at least one Wishing Piece in your bag
+#Start the bot with game closed and selection square over it
+#Den Seed address: "peek 0xaddress 8" (address = 0x4298FA70 + (0xden_id) * 0x18)) Example: 0x4298FB78 Den 11
+#Rare beam flag byte address = "peek 0xaddress 1" (address = 0x4298FA7A + (0xden_id) * 0x18) Example: 0x4298FB82 Den 11
+#Event flag byte address = "peek 0xaddress 1" (address = (0x4298FA7B + (0xden_id) * 0x18)) Example: 0x4298FB83 Den 11
+#isRare == 0/1 (search rare beam raid seeds only)
 #isEvent == 0/1 (search event raid seeds only)
 #r.Ability == '1'/'2'/'H'
 #r.Nature == 'NATURE'
@@ -22,16 +26,10 @@ s.connect(("192.168.1.7", 6000))
 reset = 0
 ivfilter = 1 #set 0 to disable filter
 Maxresults = 100000
-isEvent = 0
 #add the spreads you need
 V6 = [31,31,31,31,31,31]
 A0 = [31,0,31,31,31,31]
 S0 = [31,31,31,31,31,0]
-S1 = [31,31,31,31,31,1]
-S2 = [31,31,31,31,31,2]
-S3 = [31,31,31,31,31,3]
-S4 = [31,31,31,31,31,4]
-S5 = [31,31,31,31,31,5]
 
 time.sleep(2)
 while True:
@@ -57,7 +55,7 @@ while True:
     time.sleep(0.5)
     sendCommand(s, "click A")
     time.sleep(2)
-    sendCommand(s, "click A") #A to throw piece
+    sendCommand(s, "click A") #A to throw whishing piece
     print("throw piece in den")
     time.sleep(1.8)
     sendCommand(s, "click A") #A to save
@@ -66,23 +64,38 @@ while True:
     sendCommand(s, "click HOME") #Home
     print("HOME clicked")
     time.sleep(2)
+
+    sendCommand(s, "peek 0x4298FB82 1") #rare beam byte
+    time.sleep(0.5)
+    rarebeambyte = s.recv(3)
+    #print(binascii.unhexlify(rarebeambyte[0:-1]))
     
-    sendCommand(s, "peek 0x4298fb83 1") #event byte
+    flag_rb = int.from_bytes(binascii.unhexlify(rarebeambyte[0:-1]), "big") #rare beam flag
+    flag_rb = (flag_rb > 0) and (flag_rb & 1) == 0
+
+    if flag_rb:
+        isRare = 1
+        print("Rare beam")
+    else:
+        isRare = 0
+        print("No rare beam")
+    
+    sendCommand(s, "peek 0x4298FB83 1") #event den byte
     time.sleep(0.5)
     eventbyte = s.recv(3)
     #print(binascii.unhexlify(eventbyte[0:-1]))
     
-    flag = int.from_bytes(binascii.unhexlify(eventbyte[0:-1]), "big") #flag event
-    flag = (flag >> 1) & 1
+    flag_e = int.from_bytes(binascii.unhexlify(eventbyte[0:-1]), "big") #event den flag
+    flag_e = (flag_e >> 1) & 1
 
-    if flag:
+    if flag_e:
         isEvent = 1
         print("Event raid")
     else:
         isEvent = 0
         print("No event raid")
     
-    sendCommand(s, "peek 0x4298fb78 8") #get reversed seed from ram
+    sendCommand(s, "peek 0x4298FB78 8") #get reversed seed from ram
     time.sleep(0.5)
     re_seed = s.recv(17)
     re_seed = (binascii.unhexlify(re_seed[0:-1])).hex()
@@ -94,12 +107,11 @@ while True:
     #spread searh
     j = 0
     found = 0
-    while j < Maxresults: #and isEvent == 1:
+    while j < Maxresults: #and isEvent == 1/isRare == 1:
         r = Raid(seed, flawlessiv = 5, HA = 1, RandomGender = 1)
         seed = XOROSHIRO(seed).next()
         if ivfilter:
-            if r.ShinyType != 'None' and r.Nature == 'RELAXED' and r.Ability == 'H': #and (r.IVs == S0 or r.IVs == S1 or r.IVs == S2
-                                                                                         #or r.IVs == S3 or r.IVs == S4 or r.IVs == S5):
+            if r.ShinyType != 'None' and r.Nature == 'RELAXED' and r.Ability == 'H': #and (r.IVs == V6 or r.IVs == A0 or r.IVs == S0):
                 print(j)
                 r.print()
                 found = 1
@@ -128,3 +140,4 @@ while True:
     time.sleep(2)
     sendCommand(s, "click A")
     time.sleep(3.5)
+    print()

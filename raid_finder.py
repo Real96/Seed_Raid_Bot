@@ -1,6 +1,6 @@
 #Start the bot with closed game and selection square over it
-#Den Seed address: "peek 0xaddress 8" (seed = 0x4298FAA0 + (0xden_id - 1) * 0x18))
-#Event flag byte address = "peek 0xaddress 8" (seed = (0x4298FAAB + (den_id - 1) * 0x18)) + 0xB)
+#Den Seed address: "peek 0xaddress 8" (address = 0x4298FAA0 + (0xden_id - 1) * 0x18))
+#Event flag byte address = "peek 0xaddress 8" (address = (0x4298FAAB + (den_id - 1) * 0x18)) + 0xB)
 #isEvent == 0/1 (search event raid seeds only)
 #r.Ability == '1'/'2'/'H'
 #r.Nature == 'NATURE'
@@ -90,7 +90,7 @@ while True:
     seed = int.from_bytes(binascii.unhexlify(re_seed), "little") #reverse the seed
     print("Seed", hex(seed))
 
-    #G8RNG
+    #spread searh
     j = 0
     found = 0
     while j < Maxresults: #and isEvent == 1:

@@ -104,7 +104,7 @@ while True:
     print("Seed:", hex(seed))
     print("Searching...")
 
-    #spread searh
+    #spreads search
     j = 0
     found = 0
     while j < Maxresults: #and isEvent == 1/isRare == 1:

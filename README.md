@@ -13,6 +13,6 @@
 * olliz0r for his amazing sys-module
 * wwwwwwzx for G8RNG code
 * Admiral-Fish for cleaning G8RNG code
-* zaksabeast for CaptureSight (all addresses/checks are taken from there)
+* zaksabeast for [CaptureSight](https://github.com/zaksabeast/CaptureSight/) (all addresses/checks are taken from there)
  
  

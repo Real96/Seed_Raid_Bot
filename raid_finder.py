@@ -21,7 +21,7 @@ def sendCommand(s, content):
     s.sendall(content.encode())
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("192.168.1.7", 6000))
+s.connect(("192.168.1.5", 6000))
 
 reset = 0
 ivfilter = 1 #set 0 to disable filter
@@ -31,47 +31,50 @@ V6 = [31,31,31,31,31,31]
 A0 = [31,0,31,31,31,31]
 S0 = [31,31,31,31,31,0]
 
-time.sleep(2)
+time.sleep(1)
 while True:
     sendCommand(s, "click A") #A on game
-    print("A in game")
+    print("A on game")
     time.sleep(0.2)
     sendCommand(s, "click A")
     time.sleep(1.5)
     sendCommand(s, "click A") #A on profile
-    print("A in profile")
+    print("A on profile")
     time.sleep(0.2)
     sendCommand(s, "click A")
     time.sleep(16.5) 
     sendCommand(s, "click A") #A to skip anim
-    print("skip anim")
+    print("Skip animation")
     time.sleep(1)
     sendCommand(s, "click A")
     time.sleep(1)
     sendCommand(s, "click A")
     time.sleep(8)
-    sendCommand(s, "click A") #A in den
-    print("A in den")
+    sendCommand(s, "click A") #A on den
+    print("A on den")
     time.sleep(0.5)
     sendCommand(s, "click A")
     time.sleep(2)
     sendCommand(s, "click A") #A to throw whishing piece
-    print("throw piece in den")
+    print("Throw piece in den")
     time.sleep(1.8)
     sendCommand(s, "click A") #A to save
-    print("saving")
+    print("Saving")
     time.sleep(1)
     sendCommand(s, "click HOME") #Home
     print("HOME clicked")
-    time.sleep(1.5)
-
-    sendCommand(s, "peek 0x4298FB82 1") #rare beam byte
     time.sleep(0.5)
-    rarebeambyte = s.recv(3)
-    #print(binascii.unhexlify(rarebeambyte[0:-1]))
-    
-    flag_rb = int.from_bytes(binascii.unhexlify(rarebeambyte[0:-1]), "big") #rare beam flag
-    flag_rb = (flag_rb > 0) and (flag_rb & 1) == 0
+
+    sendCommand(s, "peek 0x4298FB78 12") #get denOffset
+    time.sleep(0.5)
+    denOffset = s.recv(25)
+
+    seed = int.from_bytes(binascii.unhexlify(denOffset[0:16]), "little") #den Seed
+    print("Seed:", hex(seed))
+
+    flag_rb = int.from_bytes(binascii.unhexlify(denOffset[20:-3]), "big") #rare beam byte
+    #print(hex(flag_rb))
+    flag_rb = (flag_rb > 0) and (flag_rb & 1) == 0 #rare beam check
 
     if flag_rb:
         isRare = 1
@@ -79,14 +82,10 @@ while True:
     else:
         isRare = 0
         print("No rare beam")
-    
-    sendCommand(s, "peek 0x4298FB83 1") #event den byte
-    time.sleep(0.5)
-    eventbyte = s.recv(3)
-    #print(binascii.unhexlify(eventbyte[0:-1]))
-    
-    flag_e = int.from_bytes(binascii.unhexlify(eventbyte[0:-1]), "big") #event den flag
-    flag_e = (flag_e >> 1) & 1
+
+    flag_e = int.from_bytes(binascii.unhexlify(denOffset[22:-1]), "big") #event den byte
+    #print(hex(flag_e))
+    flag_e = (flag_e >> 1) & 1 #event raid check
 
     if flag_e:
         isEvent = 1
@@ -94,28 +93,24 @@ while True:
     else:
         isEvent = 0
         print("No event raid")
-    
-    sendCommand(s, "peek 0x4298FB78 8") #get reversed seed from ram
-    time.sleep(0.5)
-    re_seed = s.recv(17)
-    re_seed = (binascii.unhexlify(re_seed[0:-1])).hex()
-    #print(re_seed)
-    seed = int.from_bytes(binascii.unhexlify(re_seed), "little") #reverse the seed
-    print("Seed:", hex(seed))
-    print("Searching...")
 
     #spreads search
     j = 0
     found = 0
     while j < Maxresults: #and isEvent == 1/isRare == 1:
+        if j < 1:
+            print("Searching...")
+
         r = Raid(seed, flawlessiv = 5, HA = 1, RandomGender = 1)
         seed = XOROSHIRO(seed).next()
         if ivfilter:
             if r.ShinyType != 'None' and r.Nature == 'RELAXED' and r.Ability == 'H': #and (r.IVs == V6 or r.IVs == A0 or r.IVs == S0):
-                print(j)
+                print("Frame: ", j)
                 r.print()
                 found = 1
         else:
+            found = 1
+            print("Frame: ", j)
             r.print()
         j += 1
 
@@ -127,17 +122,20 @@ while True:
             if c == 'y':
                 time.sleep(0.5)
                 sendCommand(s, "click X")
-                time.sleep(0.5)
+                time.sleep(0.8)
                 sendCommand(s, "click A")
                 time.sleep(3.5)
             break
     else:
+        if j == 0:
+            print("Research skipped")
+            
         reset = reset + 1
         print("Nothing found - resets:", reset)
 
     time.sleep(0.5)
     sendCommand(s, "click X")
-    time.sleep(0.5)
+    time.sleep(0.8)
     sendCommand(s, "click A")
     time.sleep(3.5)
     print()

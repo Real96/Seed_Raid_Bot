@@ -1,7 +1,6 @@
 #Set game text speed to slow
 #Save in front of a Den. You must have at least one Wishing Piece in your bag
 #Start the bot with game closed and selection square over it
-#Den Seed address: "peek 0xaddress 8" (address = 0x4298FA70 + (0xden_id) * 0x18)) Example: 0x4298FB78 Den 11
 #isRare == 0/1 (search rare beam raid seeds only)
 #isEvent == 0/1 (search event raid seeds only)
 #r.Ability == '1'/'2'/'H'
@@ -19,15 +18,20 @@ def sendCommand(s, content):
     s.sendall(content.encode())
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("192.168.1.5", 6000))
+s.connect(("192.168.1.4", 6000))
 
-reset = 0
+#write den's id in hex (Example: 0xC for Den 12
+denOffset_addr = str(0x4298FA70 + (0xC * 0x18))
+command = "peek " + denOffset_addr + " 12"
+
 ivfilter = 1 #set 0 to disable filter
 Maxresults = 100000
 #add the spreads you need
 V6 = [31,31,31,31,31,31]
 A0 = [31,0,31,31,31,31]
 S0 = [31,31,31,31,31,0]
+
+reset = 0
 
 time.sleep(1)
 while True:
@@ -63,7 +67,7 @@ while True:
     print("HOME clicked")
     time.sleep(0.5)
 
-    sendCommand(s, "peek 0x4298FB78 12") #get denOffset
+    sendCommand(s, command) #get denOffset
     time.sleep(0.5)
     denOffset = s.recv(25)
 

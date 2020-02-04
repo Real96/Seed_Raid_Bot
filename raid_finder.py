@@ -54,7 +54,7 @@ while True:
     sendCommand(s, "click A")
     time.sleep(2)
     sendCommand(s, "click A") #A to throw whishing piece
-    print("Throw piece in den")
+    print("Throw Wishing Piece in den")
     time.sleep(1.8)
     sendCommand(s, "click A") #A to save
     print("Saving")

@@ -1,4 +1,4 @@
-#Set game text speed to slow
+#Set game text speed to normal
 #Save in front of a Den. You must have at least one Wishing Piece in your bag
 #Start the bot with game closed and selection square over it
 #isRare == 0/1 (search rare beam raid seeds only)
@@ -47,22 +47,22 @@ while True:
     time.sleep(16.5) 
     sendCommand(s, "click A") #A to skip anim
     print("Skip animation")
-    time.sleep(1)
+    time.sleep(0.5)
     sendCommand(s, "click A")
-    time.sleep(1)
+    time.sleep(0.5)
     sendCommand(s, "click A")
     time.sleep(8)
     sendCommand(s, "click A") #A on den
     print("A on den")
     time.sleep(0.5)
     sendCommand(s, "click A")
-    time.sleep(2)
+    time.sleep(1.3)
     sendCommand(s, "click A") #A to throw whishing piece
     print("Throw Wishing Piece in den")
-    time.sleep(1.8)
+    time.sleep(1.4)
     sendCommand(s, "click A") #A to save
     print("Saving")
-    time.sleep(1)
+    time.sleep(0.8)
     sendCommand(s, "click HOME") #Home
     print("HOME clicked")
     time.sleep(0.5)

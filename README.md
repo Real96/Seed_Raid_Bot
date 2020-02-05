@@ -29,5 +29,3 @@
 * wwwwwwzx for [G8RNG](https://github.com/wwwwwwzx/raidtool) code
 * Admiral-Fish for cleaning G8RNG code
 * zaksabeast for [CaptureSight](https://github.com/zaksabeast/CaptureSight/) (all addresses/checks are taken from there)
- 
- 

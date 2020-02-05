@@ -1,5 +1,9 @@
+#Connect your Switch to Interet
+#Start sys-botbase and ldn_mitm
+#Go to System Settings, check your Switch IP and write it below
 #Set game text speed to normal
-#Save in front of a Den. You must have at least one Wishing Piece in your bag
+#Save in front of an empty Den, get its watts if they're avaiable. You must have at least one Wishing Piece in your bag
+#Write Den Id below (hex format)
 #Start the bot with game closed and selection square over it
 #isRare == 0/1 (search rare beam raid seeds only)
 #isEvent == 0/1 (search event raid seeds only)
@@ -20,7 +24,7 @@ def sendCommand(s, content):
     s.sendall(content.encode())
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("192.168.1.6", 6000))
+s.connect(("192.168.1.6", 6000)) #write the IP of your Switch here
 
 def signal_handler(signal, frame): #CTRL+C handler
     print("Stop request")
@@ -40,13 +44,13 @@ def signal_handler(signal, frame): #CTRL+C handler
 
 signal.signal(signal.SIGINT, signal_handler)
 
-#write den's id in hex (Example: 0xC for Den 12
-denOffset_addr = str(0x4298FA70 + (0xC * 0x18))
+denId = 0xC #write here the Den Id in hex format (Example: 0xC for Den 12)
+denOffset_addr = str(0x4298FA70 + (denId * 0x18))
 command = "peek " + denOffset_addr + " 12"
 
 ivfilter = 1 #set 0 to disable filter
 Maxresults = 100000
-#add the spreads you need
+#add here the spreads you need
 V6 = [31,31,31,31,31,31]
 A0 = [31,0,31,31,31,31]
 S0 = [31,31,31,31,31,0]

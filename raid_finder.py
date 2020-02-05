@@ -12,13 +12,33 @@ from G8RNG import XOROSHIRO,Raid
 import socket
 import time
 import binascii
+import signal
+import sys
 
 def sendCommand(s, content):
     content += '\r\n' #important for the parser on the switch side
     s.sendall(content.encode())
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("192.168.1.4", 6000))
+s.connect(("192.168.1.6", 6000))
+
+def signal_handler(signal, frame):
+    print("Stop request")
+    c = input('Close the game? (y/n): ')
+    if c == 'y':
+        h = input('Need HOME button pressing? (y/n): ')
+        if h == 'y':
+            sendCommand(s, "click HOME")
+        time.sleep(0.5)
+        sendCommand(s, "click X")
+        time.sleep(0.8)
+        sendCommand(s, "click A")
+        time.sleep(1)
+    print("Exiting...")
+    sendCommand(s, "detachController")
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
 
 #write den's id in hex (Example: 0xC for Den 12
 denOffset_addr = str(0x4298FA70 + (0xC * 0x18))
@@ -118,7 +138,7 @@ while True:
 
     if found:
         print("Found after", reset, "resets")
-        a = input('Continue? (y/n): ')
+        a = input('Continue searching? (y/n): ')
         if a != "y":
             c = input('Close the game? (y/n): ')
             if c == 'y':
@@ -134,7 +154,7 @@ while True:
             print("Research skipped")
             
         reset = reset + 1
-        print("Nothing found - resets:", reset)
+        print("Nothing found - Resets:", reset)
 
     time.sleep(0.5)
     sendCommand(s, "click X")

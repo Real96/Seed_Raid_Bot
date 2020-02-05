@@ -136,17 +136,17 @@ while True:
     #spreads research
     j = 0
     found = 0
-    search = 1
+    do_research = 1
     
     if rb_research == 1 and rb_research != flag_rb: #rare beam/event check
-        search = 0
+        do_research = 0
     elif ev_research == 1 and ev_research != flag_ev:
-        search = 0
+        do_research = 0
     elif rb_research == 0 and ev_research == 0:
         if rb_research != flag_rb or ev_research != flag_ev:
-            search = 0
+            do_research = 0
     
-    while j < Maxresults and search:        
+    while j < Maxresults and do_research:        
         if j < 1:
             print("Searching...")
 

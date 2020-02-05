@@ -22,7 +22,7 @@ def sendCommand(s, content):
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(("192.168.1.6", 6000))
 
-def signal_handler(signal, frame):
+def signal_handler(signal, frame): #CTRL+C handler
     print("Stop request")
     c = input('Close the game? (y/n): ')
     if c == 'y':
@@ -129,9 +129,11 @@ while True:
             if r.ShinyType != 'None' and r.Nature == 'RELAXED' and r.Ability == 'H': #and (r.IVs == V6 or r.IVs == A0 or r.IVs == S0):
                 print("Frame: ", j)
                 r.print()
-                found = 1
+                if found != 1:
+                    found = 1
         else:
-            found = 1
+            if found != 1:
+                found = 1
             print("Frame: ", j)
             r.print()
         j += 1

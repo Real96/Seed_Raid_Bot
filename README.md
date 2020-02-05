@@ -10,8 +10,8 @@
 * Softreset for rare beam raids
 
 # Usage
-* Start sys-botbase in your Switch
-* Go to System Settings, check the IP of your Switch and it in the script
+* Start sys-botbase and ldn_mitm in your Switch
+* Go to System Settings, check the IP of your Switch and write it in the script
 * Set game text speed to normal
 * Save in front of a Den. You must have at least one Wishing Piece in your bag
 * Write the id of the Den in the script (hex format)

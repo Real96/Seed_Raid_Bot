@@ -1,21 +1,26 @@
 # Seed_Raid_Bot
  A python script useful to softreset Pokémon SwSh Raids
  
-# Requirements
-* CFW
-* sys-botbase(https://github.com/olliz0r/sys-botbase)
-* ldn_mitm(https://github.com/spacemeowx2/ldn_mitm)
-
-# Features
+# Warning
+ I won't be liable if your Switch get damaged or banned. Use at your own risk.
+ 
+ # Features
 * Sofreset for a good Den Seed (perfect IVs, shiny at low frame, etc.)
 * Softreset for event raids
 * Softreset for rare beam raids
+ 
+# Requirements
+* CFW
+* Internet Connection
+* sys-botbase(https://github.com/olliz0r/sys-botbase)
+* ldn_mitm(https://github.com/spacemeowx2/ldn_mitm)
 
 # Usage
-* Start sys-botbase and ldn_mitm in your Switch
+* Connect your Switch to Interet
+* Start sys-botbase and ldn_mitm
 * Go to System Settings, check your Switch IP and write it in the script
 * Set game text speed to normal
-* Save in front of a Den. You must have at least one Wishing Piece in your bag
+* Save in front of an empty Den, get its watts if they're avaiable. You must have at least one Wishing Piece in your bag
 * Write the Den Id in the script (hex format)
 * Start the bot with game closed and selection square over it
 

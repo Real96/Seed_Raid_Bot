@@ -21,7 +21,6 @@
 * Go to System Settings, check your Switch IP and write it in the script
 * Set game text speed to normal
 * Save in front of an empty Den, get its watts if they're avaiable. You must have at least one Wishing Piece in your bag
-* Write the Den Id in the script (hex format)
 * Start the bot with game closed and selection square over it
 
 # Credits:

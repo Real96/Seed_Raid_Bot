@@ -23,6 +23,12 @@
 * Save in front of an empty Den, get its watts if they're avaiable. You must have at least one Wishing Piece in your bag
 * Start the bot with game closed and selection square over it
 
+# Research Filters
+* r.Ability == '1'/'2'/'H'
+* r.Nature == 'NATURE'
+* r.ShinyType = 'None'/'Star'/'Square'
+* r.IVs == spread_name (spread_name = [x,x,x,x,x,x])
+
 # Credits:
 * spacemeowx2 for his livesafer sys-module. It avoids Switch to disconnect from online once game is opened
 * olliz0r for his amazing sys-module

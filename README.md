@@ -16,17 +16,19 @@
 * ldn_mitm(https://github.com/spacemeowx2/ldn_mitm)
 
 # Usage
-* Connect your Switch to Interet
-* Start sys-botbase and ldn_mitm
-* Go to System Settings, check your Switch IP and write it in the script
-* Set game text speed to normal
-* Save in front of an empty Den, get its watts if they're avaiable. You must have at least one Wishing Piece in your bag
-* Start the bot with game closed and selection square over it
+1) Install the latest release of [Python](https://www.python.org/downloads/)
+2) Connect your Switch to Interet
+3) Start sys-botbase and ldn_mitm
+4) Go to System Settings, check your Switch IP and write it in the script
+5) Set game text speed to normal
+6) Save in front of an empty Den, get its watts if they're avaiable. You must have at least one Wishing Piece in your bag
+7) Modify script filters research according to what is written below
+7) Start the script with game closed and selection square over it
 
 # Research Filters
 * r.Ability == '1'/'2'/'H'
 * r.Nature == 'NATURE'
-* r.ShinyType = 'None'/'Star'/'Square'
+* r.ShinyType == 'None'/'Star'/'Square' (!= 'None' for both square/star)
 * r.IVs == spread_name (spread_name = [x,x,x,x,x,x])
 
 # Credits:

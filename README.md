@@ -1,5 +1,5 @@
 # Seed_Raid_Bot
- A python script useful to softreset Pokémon SwSh Raids
+ A python script useful to softreset Pokémon SwSh Raids. It will read Den Seed from Switch RAM and search the spread you're looking for!
  
 # Warning
  I won't be liable if your Switch get damaged or banned. Use at your own risk.

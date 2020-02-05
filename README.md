@@ -30,7 +30,7 @@
 * r.IVs == spread_name (spread_name = [x,x,x,x,x,x])
 
 # Credits:
-* spacemeowx2 for his livesafer sys-module. It avoids Switch to disconnect from online once game is opened
+* spacemeowx2 for his livesafer sys-module. It avoids Switch to disconnect from wifi once game is opened
 * olliz0r for his amazing sys-module
 * wwwwwwzx for [G8RNG](https://github.com/wwwwwwzx/raidtool) code
 * Admiral-Fish for cleaning G8RNG code

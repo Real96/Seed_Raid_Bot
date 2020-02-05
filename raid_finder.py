@@ -127,6 +127,7 @@ while True:
                 time.sleep(0.8)
                 sendCommand(s, "click A")
                 time.sleep(3.5)
+            sendCommand(s, "detachController")
             break
     else:
         if j == 0:

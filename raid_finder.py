@@ -3,10 +3,7 @@
 #Go to System Settings, check your Switch IP and write it below
 #Set game text speed to normal
 #Save in front of an empty Den, get its watts if they're avaiable. You must have at least one Wishing Piece in your bag
-#Write Den Id below (hex format)
 #Start the bot with game closed and selection square over it
-#isRare == 0/1 (search rare beam raid seeds only)
-#isEvent == 0/1 (search event raid seeds only)
 #r.Ability == '1'/'2'/'H'
 #r.Nature == 'NATURE'
 #r.ShinyType = 'None'/'Star'/'Square'
@@ -35,7 +32,11 @@ def signal_handler(signal, frame): #CTRL+C handler
             sendCommand(s, "click HOME")
         time.sleep(0.5)
         sendCommand(s, "click X")
+        time.sleep(0.2)
+        sendCommand(s, "click X")
         time.sleep(0.8)
+        sendCommand(s, "click A")
+        time.sleep(0.2)
         sendCommand(s, "click A")
         time.sleep(1)
     print("Exiting...")
@@ -44,21 +45,37 @@ def signal_handler(signal, frame): #CTRL+C handler
 
 signal.signal(signal.SIGINT, signal_handler)
 
-denId = 0xC #write here the Den Id in hex format (Example: 0xC for Den 12)
+denId = int(input("Insert Den Id: "))
+if denId > 16:
+    denId += 1
 denOffset_addr = str(0x4298FA70 + (denId * 0x18))
 command = "peek " + denOffset_addr + " 12"
 
 ivfilter = 1 #set 0 to disable filter
-Maxresults = 100000
 #add here the spreads you need
 V6 = [31,31,31,31,31,31]
 A0 = [31,0,31,31,31,31]
 S0 = [31,31,31,31,31,0]
 
 reset = 0
+rb_research = 0
+ev_research = 0
 
-time.sleep(1)
-while True:
+rb_research = input("Are you looking for a Rare Beam Raid? (y/n) ")
+if rb_research == "y":
+    rb_research = 1
+else:
+    rb_research = 0
+    ev_research = input("Are you looking for an Event Raid? (y/n) ")
+    if ev_research == "y":
+        ev_research = 1
+    else:
+        ev_research = 0
+
+Maxresults = int(input("Input Max Results: "))
+
+time.sleep(0.5)
+while True:    
     sendCommand(s, "click A") #A on game
     print("A on game")
     time.sleep(0.2)
@@ -103,27 +120,31 @@ while True:
     flag_rb = (flag_rb > 0) and (flag_rb & 1) == 0 #rare beam check
 
     if flag_rb:
-        isRare = 1
         print("Rare beam")
     else:
-        isRare = 0
         print("No rare beam")
 
-    flag_e = int.from_bytes(binascii.unhexlify(denOffset[22:-1]), "big") #event den byte
+    flag_ev = int.from_bytes(binascii.unhexlify(denOffset[22:-1]), "big") #event den byte
     #print(hex(flag_e))
-    flag_e = (flag_e >> 1) & 1 #event raid check
+    flag_ev = (flag_ev >> 1) & 1 #event raid check
 
-    if flag_e:
-        isEvent = 1
+    if flag_ev:
         print("Event raid")
     else:
-        isEvent = 0
         print("No event raid")
 
-    #spreads search
+    #spreads research
     j = 0
     found = 0
-    while j < Maxresults: #and isEvent == 1/isRare == 1:
+    while j < Maxresults:
+        if rb_research == 1 and rb_research != flag_rb:
+            break
+        elif ev_research == 1 and ev_research != flag_ev:
+            break
+        elif rb_research == 0 and ev_research == 0:
+            if rb_research != flag_rb or ev_research != flag_ev:
+                break
+        
         if j < 1:
             print("Searching...")
 
@@ -162,9 +183,14 @@ while True:
         reset = reset + 1
         print("Nothing found - Resets:", reset)
 
+    #game closing
     time.sleep(0.5)
     sendCommand(s, "click X")
+    time.sleep(0.2)
+    sendCommand(s, "click X")
     time.sleep(0.8)
+    sendCommand(s, "click A")
+    time.sleep(0.2)
     sendCommand(s, "click A")
     time.sleep(3.5)
     print()

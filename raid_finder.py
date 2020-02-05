@@ -45,7 +45,7 @@ def signal_handler(signal, frame): #CTRL+C handler
 
 signal.signal(signal.SIGINT, signal_handler)
 
-denId = int(input("Insert Den Id: "))
+denId = int(input("Den Id: "))
 if denId > 16:
     denId += 1
 denOffset_addr = str(0x4298FA70 + (denId * 0x18))

@@ -26,6 +26,8 @@
 7) Start the script with game closed and selection square over it
 
 # Research Filters
+* flawlessiv = 1/2/3/4/5 (number of IVs fixed to 31)
+* HA = 0/1 (0 for no possible hidden power, 1 for possible hidden power)
 * r.Ability == '1'/'2'/'H'
 * r.Nature == 'NATURE'
 * r.ShinyType == 'None'/'Star'/'Square' (!= 'None' for both square/star)

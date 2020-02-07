@@ -21,7 +21,7 @@ def sendCommand(s, content):
     s.sendall(content.encode())
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("192.168.1.6", 6000)) #write the IP of your Switch here
+s.connect(("192.168.1.3", 6000)) #write the IP of your Switch here
 
 def signal_handler(signal, frame): #CTRL+C handler
     print("Stop request")
@@ -153,7 +153,7 @@ while True:
         r = Raid(seed, flawlessiv = 5, HA = 1, RandomGender = 1)
         seed = XOROSHIRO(seed).next()
         if ivfilter:
-            if r.ShinyType != 'None' and r.Nature == 'RELAXED' and r.Ability == 'H': #and (r.IVs == V6 or r.IVs == A0 or r.IVs == S0):
+            if r.ShinyType != 'None' and r.Nature == 'TIMID' and r.Ability == 'H': #and (r.IVs == V6 or r.IVs == A0 or r.IVs == S0):
                 print("Frame: ", j)
                 r.print()
                 if found != 1:
@@ -172,10 +172,12 @@ while True:
             c = input('Close the game? (y/n): ')
             if c == 'y':
                 time.sleep(0.5)
+                print("Closing game...")
                 sendCommand(s, "click X")
                 time.sleep(0.8)
                 sendCommand(s, "click A")
                 time.sleep(3.5)
+            print("Exiting...")
             sendCommand(s, "detachController")
             break
     else:

@@ -21,7 +21,7 @@
 3) Start sys-botbase and ldn_mitm
 4) Go to System Settings, check your Switch IP and write it in the script
 5) Set game text speed to normal
-6) Save in front of an empty Den, get its watts if they're avaiable. You must have at least one Wishing Piece in your bag
+6) Save in front of an empty Den (get its watts before saving if they're avaiable). You must have at least one Wishing Piece in your bag
 7) Modify script filters research according to what is written below
 7) Start the script with game closed and selection square over it
 

@@ -73,9 +73,9 @@ else:
     else:
         ev_research = 0
 
-answer = input("Are you looking for Toxtricity? (y/n) ")
+isToxtricity = input("Are you looking for Toxtricity? (y/n) ")
 
-if answer == 'y':
+if isToxtricity == 'y':
     game_version = input("Game? (Sw/Sh) ")
     if game_version == 'Sw':
         isToxtricity = 1
@@ -123,7 +123,7 @@ while True:
     denOffset = s.recv(25)
 
     seed = int.from_bytes(binascii.unhexlify(denOffset[0:16]), "little") #den Seed
-    print("Seed:", hex(seed))
+    print("Seed:", str(hex(seed))[2:18].upper())
 
     flag_rb = int.from_bytes(binascii.unhexlify(denOffset[20:-3]), "big") #rare beam byte
     #print(hex(flag_rb))
@@ -139,9 +139,9 @@ while True:
     flag_ev = (flag_ev >> 1) & 1 #event raid check
 
     if flag_ev:
-        print("Event raid")
+        print("Event Raid")
     else:
-        print("No event raid")
+        print("No event Raid")
 
     #spreads research
     j = 0

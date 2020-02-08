@@ -20,9 +20,6 @@ def sendCommand(s, content):
     content += '\r\n' #important for the parser on the switch side
     s.sendall(content.encode())
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("192.168.1.3", 6000)) #write the IP of your Switch here
-
 def signal_handler(signal, frame): #CTRL+C handler
     print("Stop request")
     c = input('Close the game? (y/n): ')
@@ -43,23 +40,27 @@ def signal_handler(signal, frame): #CTRL+C handler
     sendCommand(s, "detachController")
     sys.exit(0)
 
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(("192.168.1.3", 6000)) #write the IP of your Switch here
+
 signal.signal(signal.SIGINT, signal_handler)
 
-denId = int(input("Den Id: "))
-if denId > 16:
-    denId += 1
-denOffset_addr = str(0x4298FA70 + (denId * 0x18))
-command = "peek " + denOffset_addr + " 12"
-
 ivfilter = 1 #set 0 to disable filter
-#add here the spreads you need
-V6 = [31,31,31,31,31,31]
+
+V6 = [31,31,31,31,31,31] #add here the spreads you need
 A0 = [31,0,31,31,31,31]
 S0 = [31,31,31,31,31,0]
 
 reset = 0
 rb_research = 0
 ev_research = 0
+isToxtricity = 0
+
+denId = int(input("Den Id: "))
+if denId > 16:
+    denId += 1
+denOffset_addr = str(0x4298FA70 + (denId * 0x18))
+command = "peek " + denOffset_addr + " 12"
 
 rb_research = input("Are you looking for a Rare Beam Raid? (y/n) ")
 if rb_research == "y":
@@ -71,6 +72,15 @@ else:
         ev_research = 1
     else:
         ev_research = 0
+
+answer = input("Are you looking for Toxtricity? (y/n) ")
+
+if answer == 'y':
+    game_version = input("Game? (Sw/Sh) ")
+    if game_version == 'Sw':
+        isToxtricity = 1
+    else:
+        isToxtricity = 2
 
 Maxresults = int(input("Input Max Results: "))
 
@@ -150,10 +160,10 @@ while True:
         if j < 1:
             print("Searching...")
 
-        r = Raid(seed, flawlessiv = 5, HA = 1, RandomGender = 1)
+        r = Raid(seed,isToxtricity, flawlessiv = 5, HA = 1, RandomGender = 1)
         seed = XOROSHIRO(seed).next()
         if ivfilter:
-            if r.ShinyType != 'None' and r.Nature == 'TIMID' and r.Ability == 'H': #and (r.IVs == V6 or r.IVs == A0 or r.IVs == S0):
+            if r.ShinyType != 'None' and r.Nature == 'ADAMANT' and r.Ability == 'H': #and (r.IVs == V6 or r.IVs == A0 or r.IVs == S0):
                 print("Frame: ", j)
                 r.print()
                 if found != 1:

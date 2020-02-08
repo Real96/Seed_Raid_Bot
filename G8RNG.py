@@ -32,13 +32,17 @@ class XOROSHIRO:
         return self.next() & mask
 
 class Raid:
-    def __init__(self,seed,flawlessiv, HA = 0, RandomGender = 1):
+    def __init__(self,seed,isToxtricity,flawlessiv, HA = 0, RandomGender = 1):
         self.seed = seed
 
         r = XOROSHIRO(seed)
         self.EC = r.randRoll(0xffffffff, 0xffffffff)
         OTID = r.randRoll(0xffffffff, 0xffffffff)
         self.PID = r.randRoll(0xffffffff, 0xffffffff)
+
+        
+        toxtricityAmpedNatures = [3, 4, 2, 8, 9, 19, 22, 11, 13, 14, 0, 6, 24]
+        toxtricityLowKeyNatures = [1, 5, 7, 10, 12, 15, 16, 17, 18, 20, 21, 23]
 
         self.XOR = (self.PID >> 16) ^ (self.PID & 0xFFFF) ^ (OTID >> 16) ^ (OTID & 0xFFFF)
         if self.XOR >= 16:
@@ -67,7 +71,14 @@ class Raid:
             self.Gender = r.randRoll(253, 255) + 1
         else:
             self.Gender = 0
-        self.Nature_pointer = r.randRoll(25, 31)
+
+        if isToxtricity == 0:
+            self.Nature_pointer = r.randRoll(25, 31)
+        elif isToxtricity == 1:
+            self.Nature_pointer = toxtricityAmpedNatures[r.randRoll(13, 15)]
+        else:
+            self.Nature_pointer = toxtricityLowKeyNatures[r.randRoll(12, 15)]
+
         self.Nature = PMString.natures[self.Nature_pointer]
 
     def print(self):

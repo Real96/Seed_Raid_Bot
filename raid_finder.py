@@ -28,6 +28,7 @@ def signal_handler(signal, frame): #CTRL+C handler
         if h == 'y':
             sendCommand(s, "click HOME")
         time.sleep(0.5)
+        print("Closing game...")
         sendCommand(s, "click X")
         time.sleep(0.2)
         sendCommand(s, "click X")

@@ -53,9 +53,7 @@ A0 = [31,0,31,31,31,31]
 S0 = [31,31,31,31,31,0]
 
 reset = 0
-rb_research = 0
-ev_research = 0
-isToxtricity = 0
+RandomGender = 0
 
 denId = int(input("Den Id: "))
 if denId > 16:
@@ -82,6 +80,15 @@ if isToxtricity == 'y':
         isToxtricity = 1
     else:
         isToxtricity = 2
+else:
+    isToxtricity = 0
+
+if isToxtricity == 0:
+    RandomGender = input("Are you looking for a Random Gender Pokémon? (y/n) ")
+    if RandomGender == 'y':
+        RandomGender = 1
+    else:
+        RandomGender = 0
 
 Maxresults = int(input("Input Max Results: "))
 
@@ -161,7 +168,7 @@ while True:
         if j < 1:
             print("Searching...")
 
-        r = Raid(seed,isToxtricity, flawlessiv = 5, HA = 1, RandomGender = 1)
+        r = Raid(seed,isToxtricity,RandomGender, flawlessiv = 5, HA = 1)
         seed = XOROSHIRO(seed).next()
         if ivfilter:
             if r.ShinyType != 'None' and r.Nature == 'ADAMANT' and r.Ability == 'H': #and (r.IVs == V6 or r.IVs == A0 or r.IVs == S0):

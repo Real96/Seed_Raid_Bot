@@ -51,6 +51,7 @@ ivfilter = 1 #set 0 to disable filter
 V6 = [31,31,31,31,31,31] #add here the spreads you need
 A0 = [31,0,31,31,31,31]
 S0 = [31,31,31,31,31,0]
+TRA0 = [31,0,31,31,31,0]
 
 reset = 0
 RandomGender = 0
@@ -72,8 +73,15 @@ else:
     else:
         ev_research = 0
 
-isToxtricity = input("Are you looking for Toxtricity? (y/n) ")
+flawlessiv = int(input("How many fixed IVs will the Pokemon have? (1 to 5) "))
 
+HA = input("Is Hidden Ability possible? (y/n) ")
+if HA == 'y':
+    HA = 1
+else:
+    HA = 0
+    
+isToxtricity = input("Are you looking for Toxtricity? (y/n) ")
 if isToxtricity == 'y':
     game_version = input("Game? (Sw/Sh) ")
     if game_version == 'Sw':
@@ -82,8 +90,6 @@ if isToxtricity == 'y':
         isToxtricity = 2
 else:
     isToxtricity = 0
-
-if isToxtricity == 0:
     RandomGender = input("Are you looking for a Random Gender Pokémon? (y/n) ")
     if RandomGender == 'y':
         RandomGender = 1
@@ -168,7 +174,7 @@ while True:
         if j < 1:
             print("Searching...")
 
-        r = Raid(seed,isToxtricity,RandomGender, flawlessiv = 5, HA = 1)
+        r = Raid(seed,isToxtricity,RandomGender,flawlessiv,HA)
         seed = XOROSHIRO(seed).next()
         if ivfilter:
             if r.ShinyType != 'None' and r.Nature == 'ADAMANT' and r.Ability == 'H': #and (r.IVs == V6 or r.IVs == A0 or r.IVs == S0):

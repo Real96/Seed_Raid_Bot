@@ -32,7 +32,7 @@ class XOROSHIRO:
         return self.next() & mask
 
 class Raid:
-    def __init__(self,seed,isToxtricity,RandomGender,flawlessiv, HA = 0):
+    def __init__(self,seed,isToxtricity,RandomGender,flawlessiv,HA):
         self.seed = seed
 
         r = XOROSHIRO(seed)

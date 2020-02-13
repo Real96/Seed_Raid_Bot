@@ -27,7 +27,7 @@
 
 # Always Remember!
 Sometimes button inputs of your joycons won't work. This because the fake controller isn't detached from your Switch. 
-So, everytime you want to stop the bot, always press CTRL+C and follow the instructions. Bot will detach fake controller and buttons will work correctly. 
+So, everytime you want to stop the bot, always press CTRL+C and follow the instructions. The bot will detach the fake controller and buttons will work correctly. 
 
 # Research Filters
 * flawlessiv = 1/2/3/4/5 (number of IVs fixed to 31)

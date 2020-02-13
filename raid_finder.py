@@ -4,7 +4,7 @@
 #Set game text speed to normal
 #Save in front of an empty Den(get its watts before saving if they're avaiable). You must have at least one Wishing Piece in your bag
 #Start the bot with game closed and selection square over it
-#r.Ability == '1'/'2'/'H'
+#r.Ability == 1/2/'H'
 #r.Nature == 'NATURE'
 #r.ShinyType == 'None'/'Star'/'Square' (!= 'None' for both square/star)
 #r.IVs == spread_name (spread_name = [x,x,x,x,x,x])
@@ -22,10 +22,11 @@ def sendCommand(s, content):
 
 def signal_handler(signal, frame): #CTRL+C handler
     print("Stop request")
-    c = input('Close the game? (y/n): ')
+    c = input("Close the game? (y/n): ")
     if c == 'y':
-        h = input('Need HOME button pressing? (y/n): ')
+        h = input("Need HOME button pressing? (y/n): ")
         if h == 'y':
+            time.sleep(0.5)
             sendCommand(s, "click HOME")
         time.sleep(0.5)
         print("Closing game...")
@@ -128,7 +129,7 @@ while True:
     time.sleep(1.4)
     sendCommand(s, "click A") #A to save
     print("Saving")
-    time.sleep(0.8)
+    time.sleep(1.4)
     sendCommand(s, "click HOME") #Home
     print("HOME clicked")
     time.sleep(0.5)
@@ -192,9 +193,9 @@ while True:
 
     if found:
         print("Found after", reset, "resets")
-        a = input('Continue searching? (y/n): ')
+        a = input("Continue searching? (y/n): ")
         if a != "y":
-            c = input('Close the game? (y/n): ')
+            c = input("Close the game? (y/n): ")
             if c == 'y':
                 time.sleep(0.5)
                 print("Closing game...")

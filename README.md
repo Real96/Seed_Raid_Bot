@@ -16,6 +16,7 @@
 * ldn_mitm(https://github.com/spacemeowx2/ldn_mitm)
 
 # Usage
+To check Den id, use CaptureSight
 1) Install the latest release of [Python](https://www.python.org/downloads/)
 2) Connect your Switch to Interet
 3) Start sys-botbase and ldn_mitm
@@ -23,7 +24,7 @@
 5) Set game text speed to normal
 6) Save in front of an empty Den (get its watts before saving if they're avaiable). You must have at least one Wishing Piece in your bag
 7) Modify script filters research according to what is written below
-7) Start the script with game closed and selection square over it
+8) Start the script with game closed and selection square over it
 
 # Always Remember!
 Sometimes button inputs of your joycons won't work. This because the fake controller isn't detached from your Switch. 

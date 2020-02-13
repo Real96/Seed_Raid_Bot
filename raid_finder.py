@@ -42,7 +42,7 @@ def signal_handler(signal, frame): #CTRL+C handler
     sys.exit(0)
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("192.168.1.3", 6000)) #write the IP of your Switch here
+s.connect(("192.168.1.5", 6000)) #write the IP of your Switch here
 
 signal.signal(signal.SIGINT, signal_handler)
 
@@ -65,6 +65,7 @@ command = "peek " + denOffset_addr + " 12"
 rb_research = input("Are you looking for a Rare Beam Raid? (y/n) ")
 if rb_research == "y":
     rb_research = 1
+    ev_research = 0
 else:
     rb_research = 0
     ev_research = input("Are you looking for an Event Raid? (y/n) ")
@@ -177,7 +178,7 @@ while True:
         r = Raid(seed,isToxtricity,RandomGender,flawlessiv,HA)
         seed = XOROSHIRO(seed).next()
         if ivfilter:
-            if r.ShinyType != 'None' and r.Nature == 'ADAMANT' and r.Ability == 'H': #and (r.IVs == V6 or r.IVs == A0 or r.IVs == S0):
+            if r.ShinyType != 'None' and r.Nature == 'BOLD' and r.Ability == 'H': #and (r.IVs == V6 or r.IVs == A0 or r.IVs == S0):
                 print("Frame: ", j)
                 r.print()
                 if found != 1:

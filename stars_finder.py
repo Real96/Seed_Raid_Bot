@@ -37,7 +37,7 @@ def signal_handler(signal, frame): #CTRL+C handler
     sys.exit(0)
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("192.168.1.5", 6000)) #write the IP of your Switch here
+s.connect(("192.168.1.2", 6000)) #write the IP of your Switch here
 
 signal.signal(signal.SIGINT, signal_handler)
 
@@ -76,7 +76,7 @@ while True:
     time.sleep(0.5)
     denOffset = s.recv(25)
     
-    stars_byte = int.from_bytes(binascii.unhexlify(denOffset[16:-7]), "big") #Raid stars
+    stars_byte = int.from_bytes(binascii.unhexlify(denOffset[16:-7]), "big") #raid stars
     print("Raid stars:", stars_byte + 1)
     time.sleep(0.5)
 
@@ -96,7 +96,7 @@ while True:
                 time.sleep(3.5)
             print("Exiting...")
             sendCommand(s, "detachController")
-        break
+            break
     else:
         reset = reset + 1
         print("Wrong Stars - Resets:", reset)

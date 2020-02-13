@@ -1,5 +1,5 @@
 # Seed_Raid_Bot
- A useful python script which softresets Pokémon SwSh Raids. It will read Den Seed from Switch RAM and search the spread you're looking for!
+ A useful python script which softresets Pokémon SwSh Dens. It will read Den Seed from Switch RAM and search the spread you're looking for!
  
 # Warning
  I won't be liable if your Switch get damaged or banned. Use at your own risk.
@@ -30,7 +30,7 @@ To check Den id, use CaptureSight
 Sometimes button inputs of your joycons won't work. This because the fake controller isn't detached from your Switch. 
 So, everytime you want to stop the bot, always press CTRL+C and follow the instructions. The bot will detach the fake controller and buttons will work correctly. 
 
-# Research Filters (Need to be edited!)
+# Research Filters (need to be edited inside the script!)
 * r.ShinyType == 'None'/'Star'/'Square' (!= 'None' for both square/star)
 * r.Nature == 'NATURE'
 * r.Ability == 1/2/'H'

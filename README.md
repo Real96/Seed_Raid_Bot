@@ -25,6 +25,10 @@
 7) Modify script filters research according to what is written below
 7) Start the script with game closed and selection square over it
 
+# Always Remember!
+Sometimes button inputs of your joycons won't work. This because the fake controller isn't detached from your Switch. 
+So, everytime you want to stop the bot, always press CTRL+C and follow the instructions. Bot will detach fake controller and buttons will work correctly. 
+
 # Research Filters
 * flawlessiv = 1/2/3/4/5 (number of IVs fixed to 31)
 * HA = 0/1 (0 for not possible hidden ability, 1 for possible hidden ability)

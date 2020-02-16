@@ -2,7 +2,7 @@
 #Start sys-botbase and ldn_mitm
 #Go to System Settings, check your Switch IP and write it below
 #Set game text speed to normal
-#Save in front of an empty Den(get its watts before saving if they're avaiable). You must have at least one Wishing Piece in your bag
+#Save in front of an empty Den. You must have at least one Wishing Piece in your bag
 #Start the bot with game closed and selection square over it
 #r.Ability == 1/2/'H'
 #r.Nature == 'NATURE'
@@ -43,7 +43,7 @@ def signal_handler(signal, frame): #CTRL+C handler
     sys.exit(0)
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("192.168.1.5", 6000)) #write the IP of your Switch here
+s.connect(("192.168.1.4", 6000)) #write the IP of your Switch here
 
 signal.signal(signal.SIGINT, signal_handler)
 
@@ -61,7 +61,10 @@ denId = int(input("Den Id: "))
 if denId > 16:
     denId += 1
 denOffset_addr = str(0x4298FA70 + (denId * 0x18))
-command = "peek " + denOffset_addr + " 12"
+denOffset_command = "peek " + denOffset_addr + " 12"
+
+wattsByte_addr = str(0x4298FA7B + (denId * 0x18))
+wattsByte_command = "peek " + wattsByte_addr + " 1"
 
 rb_research = input("Are you looking for a Rare Beam Raid? (y/n) ")
 if rb_research == "y":
@@ -99,8 +102,8 @@ else:
         RandomGender = 0
 
 Maxresults = int(input("Input Max Results: "))
-
 time.sleep(0.5)
+
 while True:    
     sendCommand(s, "click A") #A on game
     print("A on game")
@@ -119,6 +122,32 @@ while True:
     time.sleep(0.5)
     sendCommand(s, "click A")
     time.sleep(8)
+
+    sendCommand(s, wattsByte_command) #get wattsByte
+    time.sleep(0.5)
+    wattsByte = s.recv(3)
+    flag_watts = int.from_bytes(binascii.unhexlify(wattsByte[0:-1]), "big") #check if den has watts
+    #print(flag_watts)
+    flag_watts = (flag_watts & 1) == 0
+
+    if flag_watts:
+        print("Den has watts - Getting them...")
+        sendCommand(s, "click A") #A on den
+        time.sleep(1.5)
+        sendCommand(s, "click A")
+        time.sleep(1.2)
+        sendCommand(s, "click A")
+        time.sleep(1.2)
+        sendCommand(s, "click X") #open menu
+        time.sleep(1.2)
+        print("Saving...")
+        sendCommand(s, "click R") #saving
+        time.sleep(1.5)
+        sendCommand(s, "click A")
+        time.sleep(4)
+    else:
+        print("No watts in Den")
+    
     sendCommand(s, "click A") #A on den
     print("A on den")
     time.sleep(0.5)
@@ -129,12 +158,12 @@ while True:
     time.sleep(1.4)
     sendCommand(s, "click A") #A to save
     print("Saving")
-    time.sleep(1.4)
+    time.sleep(1.2)
     sendCommand(s, "click HOME") #Home
     print("HOME clicked")
     time.sleep(0.5)
 
-    sendCommand(s, command) #get denOffset
+    sendCommand(s, denOffset_command) #get denOffset
     time.sleep(0.5)
     denOffset = s.recv(25)
 
@@ -180,14 +209,14 @@ while True:
         seed = XOROSHIRO(seed).next()
         if ivfilter:
             if r.ShinyType != 'None' and r.Nature == 'BOLD' and r.Ability == 'H': #and (r.IVs == V6 or r.IVs == A0 or r.IVs == S0):
-                print("Frame: ", j)
+                print("Frame:", j)
                 r.print()
                 if found != 1:
                     found = 1
         else:
             if found != 1:
                 found = 1
-            print("Frame: ", j)
+            print("Frame:", j)
             r.print()
         j += 1
 
@@ -209,7 +238,6 @@ while True:
     else:
         if j == 0:
             print("Research skipped")
-            
         reset = reset + 1
         print("Nothing found - Resets:", reset)
 

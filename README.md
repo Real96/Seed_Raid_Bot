@@ -10,23 +10,35 @@
 * Sofreset for a good Den Seed (perfect IVs, shiny at low frame, etc.)
 * Softreset for event raids
 * Softreset for rare beam raids
+* Softreset for stars
  
 # Requirements
 * CFW
 * Internet Connection
 * sys-botbase(https://github.com/olliz0r/sys-botbase)
 * ldn_mitm(https://github.com/spacemeowx2/ldn_mitm)
+* luxray(https://github.com/3096/luxray) (for stars_finder only)
 
 # Usage
 To check Den id, use CaptureSight
+
+Raid Finder:
 1) Install the latest release of [Python](https://www.python.org/downloads/)
 2) Connect your Switch to Interet
 3) Start sys-botbase and ldn_mitm
 4) Go to System Settings, check your Switch IP and write it in the script
 5) Set game text speed to normal
-6) Save in front of an empty Den (get its watts before saving if they're avaiable). You must have at least one Wishing Piece in your bag
+6) Save in front of an empty Den. You must have at least one Wishing Piece in your bag
 7) Modify script filters research according to what is written below
 8) Start the script with game closed and selection square over it
+
+Stars Finder:
+1) Install the latest release of [Python](https://www.python.org/downloads/)
+2) Connect your Switch to Interet
+2) Start sys-botbase, ldn_mitm and luxray (the yellow cursor of luxray has to be over "+3" button)
+3) Go to System Settings, check your Switch IP and write it in the script
+4) Save in front of an Den whose beam has been generated through Wishing Piece
+5) Start the script with game closed and selection square over it
 
 # Always Remember!
 Sometimes button inputs of your joycons won't work. This because the fake controller isn't detached from your Switch. 

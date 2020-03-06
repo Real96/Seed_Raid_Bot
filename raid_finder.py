@@ -3,7 +3,7 @@
 #Go to System Settings, check your Switch IP and write it below
 #Set game text speed to normal
 #Save in front of an empty Den. You must have at least one Wishing Piece in your bag
-#Start the bot with game closed and selection square over it
+#Start the script with game closed and selection square over it
 #r.Ability == 1/2/'H'
 #r.Nature == 'NATURE'
 #r.ShinyType == 'None'/'Star'/'Square' (!= 'None' for both square/star)
@@ -28,8 +28,8 @@ def signal_handler(signal, frame): #CTRL+C handler
         if h == 'y':
             time.sleep(0.5)
             sendCommand(s, "click HOME")
-        time.sleep(0.5)
         print("Closing game...")
+        time.sleep(0.8)
         sendCommand(s, "click X")
         time.sleep(0.2)
         sendCommand(s, "click X")
@@ -55,7 +55,6 @@ S0 = [31,31,31,31,31,0]
 TRA0 = [31,0,31,31,31,0]
 
 reset = 0
-RandomGender = 0
 
 denId = int(input("Den Id: "))
 if denId > 16:
@@ -93,6 +92,7 @@ if isToxtricity == 'y':
         isToxtricity = 1
     else:
         isToxtricity = 2
+    RandomGender = 0
 else:
     isToxtricity = 0
     RandomGender = input("Are you looking for a Random Gender Pokémon? (y/n) ")

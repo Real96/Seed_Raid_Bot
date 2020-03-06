@@ -2,7 +2,7 @@
 #Start sys-botbase, ldn_mitm and luxray (the yellow cursor of luxray has to be over "+3" button)
 #Go to System Settings, check your Switch IP and write it below
 #Save in front of an Den whose beam has been generated through Wishing Piece
-#Start the bot with game closed and selection square over it
+#Start the script with game closed and selection square over it
 
 import socket
 import time

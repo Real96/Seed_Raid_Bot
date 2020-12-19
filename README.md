@@ -1,3 +1,6 @@
+# New Project
+ Updated project: https://github.com/wwwwwwzx/PyNXBot
+
 # Seed_Raid_Bot
  A useful python script which softresets Pokémon SwSh Dens. It will read Den Seed from Switch RAM and search the spread you're looking for!
  
